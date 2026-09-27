@@ -409,3 +409,76 @@ body > .btn button:hover {
     border-left: 5px solid #28a745;
     background-color: rgba(40, 167, 69, 0.1);
 }
+
+/* ==========================================
+   AJUSTES RESPONSIVOS PARA O PAINEL
+   ========================================== */
+
+@media (max-width: 900px) {
+    /* Transforma os cards de resumo do meio em coluna se o ecrã ficar estreito */
+    .container-principal {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Ajustes gerais de espaçamento para telemóveis */
+    .caixa-principal {
+        padding: 0 10px;
+    }
+    
+    .caixa-principal p {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .container, .container-principal, .container-lista {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Reduz o tamanho do card de topo do comboio */
+    .caixa {
+        padding: 12px 15px;
+        gap: 10px;
+    }
+
+    .logo img {
+        width: 80px;
+    }
+
+    .info label {
+        font-size: 15px;
+    }
+
+    /* Ajuste na lista de produtos para empilhar se necessário ou encolher elementos */
+    .box-lista {
+        height: auto;
+        min-height: 110px;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .box-lista img {
+        width: 40px;
+        padding: 5px;
+    }
+
+    .lista label {
+        font-size: 13px;
+    }
+
+    .lista h3, .lista label:nth-child(2), .lista label:nth-child(3) {
+        font-size: 11px;
+    }
+
+    /* Reduz a largura do input de número em telemóveis muito estreitos */
+    .lista input[type="number"] {
+        width: 65px;
+        font-size: 14px;
+        padding: 4px 6px;
+    }
+}
+
+

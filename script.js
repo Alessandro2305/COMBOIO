@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     } else {
+        
         // ==========================================
         // PARTE 2: TELA DE LOGIN (index.html)
         // ==========================================
@@ -97,17 +98,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const inputNome = document.getElementById('nome');
         const btnEntrar = document.querySelector('.btn button');
 
+        // Mapeamento dos códigos de unidade por filial
+        const codigosUnidades = {
+            "IGUATEMI": "1",
+            "PARANACITY": "2",
+            "TERRA RICA": "13",
+            "RONDON": "15",
+            "CIDADE GAUCHA": "16",
+            "IVATE": "4",
+            "RIO PARANA": "72",
+            "TAPEJARA": "3",
+            "MOREIRA SALES": "18"
+        };
+
         if (campoFilial && campoUnidade) {
             campoFilial.addEventListener('change', () => {
                 const filialSelecionada = campoFilial.value;
 
-                if (filialSelecionada === "RONDON") {
-                    campoUnidade.value = "15";
-                } else if (filialSelecionada === "CIDADE GAUCHA") {
-                    campoUnidade.value = "16";
-                } else {
-                    campoUnidade.value = "";
-                }
+                // Define a unidade automaticamente com base no mapa acima
+                campoUnidade.value = codigosUnidades[filialSelecionada] || "";
 
                 if (inputFrota) inputFrota.value = "";
                 if (inputDeposito) inputDeposito.value = "";
