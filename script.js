@@ -1,124 +1,233 @@
+const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbwvlrEtsmKArYI_7worA4POlnx5js2teJRRJZIhTHNNwPdAeAsxu-wJWKPcvEBqKD-x/exec";
 
-    // Usando window.onload para garantir que tudo no HTML já foi carregado
-    window.onload = function() {
+document.addEventListener("DOMContentLoaded", () => {
+    // Detecta se estamos na página do painel ou de login
+    const isPainel = window.location.pathname.includes("painel.html");
+
+    if (isPainel) {
+        // ==========================================
+        // PARTE 1: PAINEL DE CONTROLE (painel.html)
+        // ==========================================
+        const dadosSalvos = JSON.parse(localStorage.getItem("dadosComboio"));
         
-        // ==========================================
-        // 1. LÓGICA DA FILIAL E UNIDADE
-        // ==========================================
-        const campoFilial = document.getElementById('filial');
-        const campoUnidade = document.getElementById('unidade');
+        if (dadosSalvos) {
+            const viewDeposito = document.getElementById("view-deposito");
+            const viewFrota = document.getElementById("view-frota");
+            const viewUnidade = document.getElementById("view-unidade");
+            const viewNome = document.getElementById("view-nome");
 
-        if (campoFilial && campoUnidade) {
-            campoFilial.addEventListener('change', () => {
-                campoUnidade.value = campoFilial.value;
+            if (viewDeposito) viewDeposito.textContent = `CAM-${dadosSalvos.deposito}`;
+            if (viewFrota) viewFrota.textContent = `Comboio-${dadosSalvos.frota}`;
+            if (viewUnidade) viewUnidade.textContent = `Unidade: ${dadosSalvos.filial}`;
+            if (viewNome) viewNome.textContent = dadosSalvos.nome;
+        } else {
+            alert("Sessão não encontrada. Por favor, efetue o login novamente.");
+            window.location.href = "index.html";
+            return;
+        }
+
+        // Botão Sair
+        const btnSair = document.querySelector(".btn-sair button");
+        if (btnSair) {
+            btnSair.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("dadosComboio");
+                window.location.href = "index.html";
             });
         }
 
-        // ==========================================
-        // 2. LÓGICA DAS BARRAS DE ESTOQUE E CORES
-        // ==========================================
+        // Lógica dos inputs de estoque, barras e cores
         const itensEstoque = document.querySelectorAll(".info-estoque-lista");
 
-        itensEstoque.forEach(item => {
-            const inputNumero = item.querySelector('input[type="number"]');
-            const inputBarra = item.querySelector('input[type="range"]');
-            const textoPorcentagem = item.querySelector('p');
+        if (itensEstoque.length > 0) {
+            itensEstoque.forEach(item => {
+                const inputNumero = item.querySelector('input[type="number"]');
+                const inputBarra = item.querySelector('input[type="range"]');
+                const textoPorcentagem = item.querySelector('p');
 
-            if (!inputNumero || !inputBarra) return;
+                if (!inputNumero || !inputBarra) return;
 
-            inputBarra.min = 0;
-            inputBarra.max = 300;
+                inputBarra.min = 0;
+                inputBarra.max = 300;
 
-            const atualizarStatus = () => {
-                // Pega o número digitado
-                let valor = parseInt(inputNumero.value) || 0;
-                
-                // Trava no máximo de 300 para o cálculo da barra
-                if (valor > 300) valor = 300;
+                const atualizarStatus = () => {
+                    let valor = parseFloat(inputNumero.value) || 0;
 
-                inputBarra.value = valor;
+                    inputBarra.value = valor > 300 ? 300 : valor;
 
-                // Descobre a cor correta
-                let cor = "";
-                if (valor < 50) {
-                    cor = "#e74c3c"; // Vermelho
-                } else if (valor >= 50 && valor <= 150) {
-                    cor = "#f39c12"; // Amarelo
-                } else {
-                    cor = "#2ecc71"; // Verde
-                }
+                    let cor = "";
+                    // Abaixo de 50L: Vermelho (Crítico)
+                    if (valor < 50) {
+                        cor = "#e74c3c"; 
+                    } 
+                    // De 50 a 150L: Laranja/Amarelo (Atenção)
+                    else if (valor >= 50 && valor <= 150) {
+                        cor = "#f39c12"; 
+                    } 
+                    // Acima de 150 até 300L: Verde (Normal)
+                    else {
+                        cor = "#2ecc71"; 
+                    }
 
-                // Calcula a porcentagem real
-                let porcentagem = Math.round((valor / 300) * 100);
+                    inputBarra.style.setProperty('--accent-color', cor);
 
-                // FORÇA A PINTURA DA BARRA (Resolve o bug de não atualizar)
-                inputBarra.style.background = `linear-gradient(to right, ${cor} ${porcentagem}%, #e9ecef ${porcentagem}%)`;
-                
-                // Esconde a cor de destaque do CSS antigo para não dar conflito
-                inputBarra.style.setProperty('--accent-color', 'transparent');
+                    let porcentagem = Math.round((valor / 300) * 100);
+                    if (porcentagem > 100) porcentagem = 100;
+                    if (textoPorcentagem) {
+                        textoPorcentagem.textContent = `${porcentagem}%`;
+                        textoPorcentagem.style.color = cor;
+                        textoPorcentagem.style.backgroundColor = `${cor}25`;
+                    }
+                };
 
-                // Atualiza o balão de porcentagem
-                if (textoPorcentagem) {
-                    textoPorcentagem.textContent = `${porcentagem}%`;
-                    textoPorcentagem.style.color = cor;
-                    textoPorcentagem.style.backgroundColor = `${cor}25`; // Fundo claro da mesma cor
-                }
-            };
-
-            // Escuta cada vez que você digita ou apaga um número
-            inputNumero.addEventListener("input", atualizarStatus);
-            
-            // Roda uma vez no início para deixar todas as barras zeradas
-            atualizarStatus();
-        });
-    };
-
-    // Localize o seu botão ENVIAR. Assumindo que ele está na classe .btn e é o primeiro botão
-const botaoEnviar = document.querySelector('body > .btn button');
-
-if (botaoEnviar) {
-    botaoEnviar.addEventListener('click', (event) => {
-        event.preventDefault(); // Evita que a página pisque ou recarregue
-
-        // 1. Coleta os dados gerais de identificação
-        const filial = document.getElementById('filial') ? document.getElementById('filial').value : 'Não informado';
-        const deposito = document.getElementById('unidade') ? document.getElementById('unidade').value : 'Não informado';
-        
-        // Assumindo que você crie/tenha inputs com id="cracha" e id="equipamento"
-        const cracha = document.getElementById('cracha') ? document.getElementById('cracha').value : 'Não informado';
-        const equipamento = document.getElementById('equipamento') ? document.getElementById('equipamento').value : 'Não informado';
-
-        // 2. Coleta os saldos de cada caminhão/produto individualmente
-        const saldos = [];
-        const linhasEstoque = document.querySelectorAll('.box-lista');
-
-        linhasEstoque.forEach(linha => {
-            // Pega o nome do produto ou caminhão (o primeiro label dentro de .lista)
-            const nomeItem = linha.querySelector('.lista label').innerText;
-            // Pega o valor digitado
-            const litros = linha.querySelector('input[type="number"]').value || "0";
-
-            saldos.push({
-                item: nomeItem,
-                litros: litros
+                inputNumero.addEventListener("input", atualizarStatus);
+                atualizarStatus();
             });
-        });
+        }
 
-        // 3. Empacota tudo em um objeto organizado
-        const dadosParaEnvio = {
-            identificacao: {
-                filial: filial,
-                deposito: deposito,
-                cracha: cracha,
-                equipamento: equipamento
-            },
-            estoque: saldos
-        };
+    } else {
+        // ==========================================
+        // PARTE 2: TELA DE LOGIN (index.html)
+        // ==========================================
+        const campoFilial = document.getElementById('filial');
+        const campoUnidade = document.getElementById('unidade');
+        const inputFrota = document.getElementById('frota');
+        const inputDeposito = document.getElementById('deposito');
+        const inputCracha = document.getElementById('cracha');
+        const inputNome = document.getElementById('nome');
+        const btnEntrar = document.querySelector('.btn button');
 
-        // Imprime no painel de desenvolvedor (F12) para você ver a mágica acontecendo
-        console.log("Pacote de dados capturado com sucesso:", dadosParaEnvio);
+        if (campoFilial && campoUnidade) {
+            campoFilial.addEventListener('change', () => {
+                const filialSelecionada = campoFilial.value;
 
-        // AQUI SUBSTITUÍMOS PELO CÓDIGO DE ENVIO ESCOLHIDO (Planilha, Webhook ou WhatsApp)
-        alert("Dados capturados! Abra o console (F12) para visualizar.");
-    });
-}
+                if (filialSelecionada === "RONDON") {
+                    campoUnidade.value = "15";
+                } else if (filialSelecionada === "CIDADE GAUCHA") {
+                    campoUnidade.value = "16";
+                } else {
+                    campoUnidade.value = "";
+                }
+
+                if (inputFrota) inputFrota.value = "";
+                if (inputDeposito) inputDeposito.value = "";
+                if (inputCracha) inputCracha.value = "";
+                if (inputNome) inputNome.value = "";
+            });
+        }
+
+        if (inputFrota) {
+            inputFrota.value = "";
+            inputFrota.addEventListener('blur', async () => {
+                const frota = inputFrota.value.trim();
+                const filial = campoFilial.value;
+
+                if (!frota) return;
+                if (!filial) {
+                    alert("Por favor, selecione a Filial primeiro.");
+                    inputFrota.value = "";
+                    return;
+                }
+
+                inputDeposito.value = "";
+                inputDeposito.placeholder = "Buscando...";
+
+                try {
+                    const resposta = await fetch(URL_GOOGLE_SCRIPT, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            acao: "verificarFrota",
+                            filial: filial,
+                            frota: frota
+                        })
+                    });
+                    const dados = await resposta.json();
+
+                    if (dados.status === "sucesso") {
+                        inputDeposito.value = dados.deposito;
+                        inputDeposito.placeholder = "";
+                    } else {
+                        inputDeposito.value = "";
+                        inputDeposito.placeholder = "Ex: 20";
+                        inputFrota.value = "";
+                        alert(dados.mensagem);
+                    }
+                } catch (e) {
+                    inputDeposito.value = "";
+                    inputDeposito.placeholder = "Ex: 20";
+                    alert("Erro ao validar a frota.");
+                }
+            });
+        }
+
+        if (inputCracha) {
+            inputCracha.addEventListener('blur', async () => {
+                const cracha = inputCracha.value.trim();
+                const filial = campoFilial.value;
+
+                if (!cracha) return;
+                if (!filial) {
+                    alert("Por favor, selecione a Filial primeiro.");
+                    inputCracha.value = "";
+                    return;
+                }
+
+                inputNome.value = "";
+                inputNome.placeholder = "Buscando...";
+
+                try {
+                    const resposta = await fetch(URL_GOOGLE_SCRIPT, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            acao: "verificarCracha",
+                            filial: filial,
+                            cracha: cracha
+                        })
+                    });
+                    const dados = await resposta.json();
+
+                    if (dados.status === "sucesso") {
+                        inputNome.value = dados.nome;
+                        inputNome.placeholder = "";
+                    } else {
+                        inputNome.value = "";
+                        inputNome.placeholder = "NOME";
+                        inputCracha.value = "";
+                        alert(dados.mensagem);
+                    }
+                } catch (e) {
+                    inputNome.value = "";
+                    inputNome.placeholder = "NOME";
+                    alert("Erro ao validar o crachá.");
+                }
+            });
+        }
+
+        if (btnEntrar) {
+            btnEntrar.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                if (!campoFilial.value || !inputFrota.value || !inputDeposito.value || !inputCracha.value || !inputNome.value) {
+                    alert("Preencha todos os campos e aguarde a validação correta.");
+                    return;
+                }
+
+                localStorage.setItem("dadosComboio", JSON.stringify({
+                    filial: campoFilial.value,
+                    unidade: campoUnidade.value,
+                    frota: inputFrota.value,
+                    deposito: inputDeposito.value,
+                    cracha: inputCracha.value,
+                    nome: inputNome.value
+                }));
+
+                btnEntrar.style.backgroundColor = "#2ecc71";
+                btnEntrar.innerText = "ACESSANDO...";
+
+                setTimeout(() => {
+                    window.location.href = "painel.html";
+                }, 1000);
+            });
+        }
+    }
+});

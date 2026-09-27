@@ -32,8 +32,8 @@
                     </div>
                     <select name="filial" id="filial">
                         <option value="">Selecione...</option>
-                        <option value="15">Rondon</option>
-                        <option value="16">Cidade Gaúcha</option>
+                        <option value="RONDON">Rondon</option>
+                        <option value="CIDADE GAUCHA">Cidade Gaúcha</option>
                     </select>
                 </div>
 
@@ -51,55 +51,53 @@
                 <div class="select">
                     <div class="box">
                         <i class="fa-solid fa-truck"></i>
-                        <label for="frota" id="frota">FROTA</label>
+                        <label for="frota">FROTA</label>
                     </div>
                     <input type="number" id="frota" name="frota" placeholder="Nº DO COMBOIO" required>
                 </div>
+
                 <div class="select">
                     <div class="box">
                         <i class="fa-solid fa-file"></i>
-                        <label for="deposito" id="deposito">DEPOSITO</label>
+                        <label for="deposito">DEPOSITO</label>
                     </div>
-                    <input type="number" id="deposito" name="deposito" placeholder="Ex: 20" required>
+                    <input type="number" id="deposito" name="deposito" disabled placeholder="Ex: 20" required>
                 </div>
 
-            </div>
-
-            <div class="caixa-info01">
                 <div class="select">
                     <div class="box">
-                        <i class="fa-solid fa-truck"></i>
-                        <label for="cracha" id="cracha">Cracha</label>
+                        <i class="fa-solid fa-id-badge"></i>
+                        <label for="cracha">Cracha</label>
                     </div>
                     <input type="number" id="cracha" name="cracha" placeholder="Nº DO CRACHA" required>
                 </div>
+
                 <div class="select">
                     <div class="box">
-                        <i class="fa-solid fa-truck"></i>
-                        <label for="nome" id="nome">Nome</label>
+                        <i class="fa-solid fa-user"></i>
+                        <label for="nome">Nome</label>
                     </div>
-                    <input type="number" id="nome" name="nome" placeholder="NOME" disabled required>
+                    <input type="text" id="nome" name="nome" placeholder="NOME" disabled required>
                 </div>
+
+                <div class="btn">
+                    <button type="submit">ENTRAR</button>
+                </div>
+
+                <div class="btn-sair">
+                    <button type="submit">SAIR</button>
+                </div>
+
+                <p>© 2026 Usina Santa Terezinha | Gestão de Estoque</p>
+
+                <h2>Versão 1.0.01</h2>
+
             </div>
 
-            <div class="btn">
-                <button type="submit">ENTRAR</button>
-            </div>
-
-            <div class="btn-sair">
-                <button type="submit">SAIR</button>
-            </div>
-
-            <p>© 2026 Usina Santa Terezinha | Gestão de Estoque</p>
-
-            <h2>Versão 1.0.01</h2>
 
         </div>
 
-
-    </div>
-
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 
 </body>
 
