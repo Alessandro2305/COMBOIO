@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #01163b;
+    --secondary-color: #f5f5f5;
+    --accent-color: #00c6ff;
+    --accent-color-hover: #0072ff;
+    --danger-color: #e52d27;
+    --danger-color-hover: #b31217;
+    --text-color-dark: #333;
+    --text-color-light: #fff;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo img {
+    width: 70px;
+    height: auto;
+}
+
+.logo-info h1 {
+    font-size: 30px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.logo-info p {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.caixa {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 40px 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.caixa-info, .caixa-info01 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.select {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.select label {
+    font-size: 12px;
+    color: var(--text-color-dark);
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.select i {
+    position: absolute;
+    left: 15px;
+    bottom: 12px;
+    color: var(--primary-color);
+    font-size: 16px;
+    z-index: 1;
+}
+
+select, .select input {
+    width: 100%;
+    height: 45px;
+    padding: 0 15px 0 45px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 8px;
+    outline: none;
+    color: var(--text-color-dark);
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+select:focus, .select input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(1, 22, 59, 0.1);
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="%2301163b" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 15px) center;
+}
+
+.select input[disabled] {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Remove spin buttons from number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.btn button, .btn-sair button {
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn {
+    margin-top: 30px;
+}
+
+.btn button {
+    background: linear-gradient(45deg, var(--accent-color), var(--accent-color-hover));
+    color: var(--text-color-light);
+}
+
+.btn button:hover {
+    background: linear-gradient(45deg, var(--accent-color-hover), var(--accent-color));
+    transform: translateY(-2px);
+}
+
+.btn-sair {
+    margin-top: 15px;
+}
+
+.btn-sair button {
+    background: linear-gradient(45deg, var(--danger-color), var(--danger-color-hover));
+    color: var(--text-color-light);
+}
+
+.btn-sair button:hover {
+    background: linear-gradient(45deg, var(--danger-color-hover), var(--danger-color));
+    transform: translateY(-2px);
+}
+
+.caixa p {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 11px;
+    color: #666;
+    font-weight: 300;
+}
+
+.caixa h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #888;
+    font-weight: 400;
+    letter-spacing: 1px;
+}

@@ -1,0 +1,400 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #01163b;
+    --primary-light: #022a70;
+    --secondary-color: #f4f7f6;
+    --accent-color: #00c6ff;
+    --text-dark: #2c3e50;
+    --text-muted: #7f8c8d;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --card-bg: #ffffff;
+    --border-radius: 16px;
+    --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+}
+
+/* ================= HEADER ================= */
+.caixa-principal {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.caixa-principal p {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+/* Isolando os botões pequenos apenas para o cabeçalho */
+.caixa-principal .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.caixa-principal .btn button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.caixa-principal .btn button i {
+    font-size: 18px;
+}
+
+.caixa-principal .btn button:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* ================= CARD COMBOIO (TOPO) ================= */
+.container {
+    width: 100%;
+    padding: 20px;
+}
+
+.caixa {
+    width: 100%;
+    background-color: var(--card-bg);
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--box-shadow);
+}
+
+.logo img {
+    width: 120px;
+    object-fit: contain;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    flex: 1;
+    margin-left: 20px;
+}
+
+.info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.info label {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-light);
+}
+
+.ativo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(46, 204, 113, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+.ativo label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+.ativo span {
+    background-color: var(--success-color);
+    border-radius: 50%;
+    height: 12px;
+    width: 12px;
+    box-shadow: 0 0 0 rgba(46, 204, 113, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+/* ================= CARDS DE RESUMO (MEIO) ================= */
+.container-principal {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 20px 20px;
+    gap: 20px;
+}
+
+.box {
+    width: 100%;
+    height: 70px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+}
+
+.box img {
+    width: 45px;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+.info-estoque {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-estoque p {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.info-estoque label {
+    font-size: 22px;
+    color: var(--primary-light);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-estoque label i {
+    font-size: 16px;
+    color: var(--accent-color);
+}
+
+/* ================= LISTA DE PRODUTOS ================= */
+.container-lista {
+    display: flex;
+    padding: 0 20px 15px 20px;
+}
+
+.box-lista {
+    width: 100%;
+    height: 120px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.box-lista:hover {
+    transform: translateY(-3px);
+}
+
+.box-lista img {
+    width: 50px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.info-estoque-lista {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.lista:first-child {
+    flex: 1;
+}
+
+.lista:last-child {
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.lista label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-light);
+}
+
+.lista h3, .lista label:nth-child(2), .lista label:nth-child(3) {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.lista p:last-child {
+    font-size: 13px;
+    font-weight: 600;
+    background-color: rgba(0, 198, 255, 0.15);
+    color: var(--primary-light);
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+/* ================= INPUT RANGE (BARRA) ================= */
+.lista input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    max-width: 200px;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 5px;
+    outline: none;
+    margin-top: 10px;
+    pointer-events: none;
+    overflow: hidden; 
+}
+
+.lista input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0px; 
+    height: 8px;
+    background: var(--accent-color);
+    border-radius: 5px;
+    box-shadow: -200px 0 0 200px var(--accent-color); 
+}
+
+.lista input[type="range"]::-moz-range-progress {
+    background-color: var(--accent-color);
+    height: 8px;
+    border-radius: 5px;
+}
+
+/* ================= INPUT NUMBER (QUANTIDADE) ================= */
+.lista input[type="number"] {
+    width: 80px;
+    padding: 6px 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-light);
+    background-color: var(--secondary-color);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    text-align: right;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.lista input[type="number"]:focus {
+    border-color: var(--accent-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2);
+}
+
+.lista input[type="number"]::-webkit-inner-spin-button,
+.lista input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.lista input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* ================= BOTÕES DE AÇÃO NO RODAPÉ ================= */
+/* Pegando o botão de "Enviar" que está direto no body */
+body > .btn {
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+body > .btn button {
+    width: 100%;
+    height: 55px;
+    background-color: var(--success-color);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    transition: all 0.3s ease;
+}
+
+body > .btn button:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+}
+
+/* Botão de Sair */
+.btn-sair {
+    padding: 0 20px 30px 20px;
+    margin-top: 5px;
+}
+
+.btn-sair button {
+    width: 100%;
+    height: 55px;
+    background-color: transparent;
+    color: var(--danger-color);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 2px solid var(--danger-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-sair button:hover {
+    background-color: var(--danger-color);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.2);
+}
